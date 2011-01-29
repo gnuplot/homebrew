@@ -5,7 +5,7 @@ class Libiconv <Formula
   homepage 'http://www.gnu.org/software/libiconv/'
   md5 '7ab33ebd26687c744a37264a330bbe9a'
 
-  keg_only :provided_by_osx
+  # keg_only :provided_by_osx
 
   def patches
     { :p1 => [
