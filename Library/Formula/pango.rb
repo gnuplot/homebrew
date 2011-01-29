@@ -8,14 +8,23 @@ class Pango <Formula
   depends_on 'pkg-config' => :build
   depends_on 'glib'
 
-  if MACOS_VERSION < 10.6
-    depends_on 'fontconfig' # Leopard's fontconfig is too old.
-    depends_on 'cairo' # Leopard doesn't come with Cairo.
+  def options
+    [
+      ["--with-x", "Build without X11 support."],
+    ]
   end
 
+  # if MACOS_VERSION < 10.6
+  depends_on 'fontconfig' # Leopard's fontconfig is too old.
+  depends_on 'cairo' # Leopard doesn't come with Cairo.
+  # end
+
   def install
+    args = ["--prefix=#{prefix}"]
+    args << "--with-x" if ARGV.include? "--with-x"
+
     fails_with_llvm "Undefined symbols when linking", :build => "2326"
-    system "./configure", "--prefix=#{prefix}", "--with-x"
+    system "./configure", *args
     system "make install"
   end
 end

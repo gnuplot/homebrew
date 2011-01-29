@@ -9,13 +9,20 @@ class Cairo <Formula
   depends_on 'libpng'
   depends_on 'pixman'
 
+  def options
+    [
+      ["--with-x", "Build with X11 support."],
+    ]
+  end
+
   # Comes with Snow Leopard, but not Leopard
-  keg_only :provided_by_osx
+  # keg_only :provided_by_osx
 
   def install
-    system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--with-x"
+    args = ["--prefix=#{prefix}",
+            "--disable-dependency-tracking"]
+    args << "--without-x" << "--enable-xlib=no" unless ARGV.include? "--with-x"
+    system "./configure", *args
     system "make install"
   end
 end
