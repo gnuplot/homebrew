@@ -7,11 +7,21 @@ class Gd <Formula
   md5 "39ac48e6d5e0012a3bd2248a0102f209"
 
   depends_on 'jpeg' => :recommended
+  depends_on 'fontconfig'
+  depends_on 'freetype'
+  depends_on 'libpng'
+  depends_on 'libiconv'
 
   def install
+    args = ["--prefix=#{prefix}",
+            "--with-fontconfig=#{Formula.factory('fontconfig').prefix}",
+            "--with-freetype=#{Formula.factory('freetype').prefix}",
+            "--with-png=#{Formula.factory('libpng').prefix}",
+            "--without-xpm"]
+
     fails_with_llvm "Undefined symbols when linking", :build => "2326"
     ENV.libpng
-    system "./configure", "--prefix=#{prefix}", "--with-freetype=/usr/X11"
+    system "./configure", *args
     system "make install"
     (lib+'pkgconfig/gdlib.pc').write pkg_file
   end
