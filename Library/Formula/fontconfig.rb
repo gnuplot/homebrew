@@ -11,6 +11,7 @@ class Fontconfig <Formula
   depends_on 'pkg-config'
   depends_on 'expat'
   depends_on 'libiconv'
+  depends_on 'zlib'
 
   def install
     ENV.x11

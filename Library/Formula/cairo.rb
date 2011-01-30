@@ -8,6 +8,8 @@ class Cairo <Formula
   depends_on 'pkg-config' => :build
   depends_on 'libpng'
   depends_on 'pixman'
+  # already installed with libpng
+  depends_on 'zlib'
 
   def options
     [

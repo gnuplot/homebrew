@@ -15,6 +15,7 @@ class Glib <Formula
 
   depends_on 'pkg-config' => :build
   depends_on 'gettext'
+  # depends_on 'libiconv'
 
   def patches
     mp = "http://trac.macports.org/export/69965/trunk/dports/devel/glib2/files/"

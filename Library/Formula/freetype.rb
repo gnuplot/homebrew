@@ -8,7 +8,7 @@ class Freetype <Formula
   homepage 'http://freetype.org/'
   version '2.4.4'
 
-  # depends_on 'cmake'
+  depends_on 'zlib'
 
   def install
 	# for static build

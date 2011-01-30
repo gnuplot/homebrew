@@ -11,6 +11,8 @@ class Gd <Formula
   depends_on 'freetype'
   depends_on 'libpng'
   depends_on 'libiconv'
+  # comes with libpng anyway
+  depends_on 'zlib'
 
   def install
     args = ["--prefix=#{prefix}",
