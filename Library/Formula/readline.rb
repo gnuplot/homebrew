@@ -5,11 +5,13 @@ class Readline <Formula
   md5 'fc2f7e714fe792db1ce6ddc4c9fb4ef3'
   homepage 'http://tiswww.case.edu/php/chet/readline/rltop.html'
 
-  keg_only <<-EOS
-OS X provides the BSD Readline library. In order to prevent conflicts when
-programs look for libreadline we are defaulting this GNU Readline installation
-to keg-only.
-EOS
+  depends_on 'ncurses'
+
+#   keg_only <<-EOS
+# OS X provides the BSD Readline library. In order to prevent conflicts when
+# programs look for libreadline we are defaulting this GNU Readline installation
+# to keg-only.
+# EOS
 
   def patches
     {:p0 => [
