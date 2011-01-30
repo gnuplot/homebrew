@@ -1,20 +1,25 @@
 require 'formula'
 
 class Gnuplot <Formula
-  url 'http://downloads.sourceforge.net/project/gnuplot/gnuplot/4.4.0/gnuplot-4.4.0.tar.gz'
+#  url 'http://downloads.sourceforge.net/project/gnuplot/gnuplot/4.4.0/gnuplot-4.4.0.tar.gz'
   homepage 'http://www.gnuplot.info'
-  md5 'e708665bd512153ad5c35252fe499059'
+#  md5 'e708665bd512153ad5c35252fe499059'
+
+  head 'git://github.com/gnuplot/gnuplot.git'
 
   depends_on 'pkg-config' => :build
   depends_on 'readline'
-  depends_on 'gd' unless ARGV.include? "--nogd"
-  depends_on 'pdflib-lite' if ARGV.include? "--pdf"
+  depends_on 'pdflib-lite' if     ARGV.include? "--pdf"
+  depends_on 'gd'          unless ARGV.include? "--nogd"
+  depends_on 'lua'         unless ARGV.include? "--without-lua"
+# TODO: pango, cairo, jpg, pdf, aqua
 
   def options
     [
-      ["--pdf", "Build with pdf support."],
+      ["--pdf",         "Build with pdf support."],
       ["--without-lua", "Build without lua support."],
-      ["--nogd", "Build without gd support."]
+      ["--without-x",   "Build without X11 support."],
+      ["--nogd",        "Build without gd support."]
     ]
   end
 
@@ -22,10 +27,13 @@ class Gnuplot <Formula
     ENV.x11
     args = ["--disable-debug", "--disable-dependency-tracking",
             "--prefix=#{prefix}",
-            "--with-readline=#{prefix}",
+            "--without-bitmap-terminals",
+            "--with-readline=#{Formula.factory('readline').prefix}",
             "--disable-wxwidgets"]
     args << "--without-lua" if ARGV.include? "--without-lua"
+    args << "--without-x"   if ARGV.include? "--without-x"
 
+    system "./prepare"
     system "./configure", *args
     system "make install"
   end
